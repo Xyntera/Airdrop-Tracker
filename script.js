@@ -8,25 +8,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const airdropsTableBody = document.querySelector('#airdrops-table tbody');
-    
+    const dashboardTotalAirdrops = document.getElementById('total-airdrops');
+    const dashboardPendingAirdrops = document.getElementById('pending-airdrops');
+    const dashboardLoggedInToday = document.getElementById('logged-in-today');
+
     const airdropData = [
-        { name: 'Airdrop 1', link: 'https://example.com', status: 'Pending', lastLogin: '' },
-        { name: 'Airdrop 2', link: 'https://example.com', status: 'Completed', lastLogin: '2024-07-20' },
-        // Add more rows as needed
+        { name: 'Community Gaming', link: 'https://www.communitygaming.io/quests', status: 'Pending', lastLogin: 'Not Logged In' },
+        { name: 'Maple Story', link: 'https://msu.io/quest/list', status: 'Pending', lastLogin: 'Not Logged In' },
+        { name: 'Avalon', link: 'https://avalon.online/quests', status: 'Pending', lastLogin: 'Not Logged In' },
+        { name: 'One Football', link: 'https://club.onefootball.com/join', status: 'Pending', lastLogin: 'Not Logged In' },
+        { name: 'Sonic Odyssey', link: 'https://odyssey.sonic.game', status: 'Pending', lastLogin: 'Not Logged In' },
+        { name: 'Kayen League', link: 'https://app.kayen.org//league?ref=1f0f336', status: 'Pending', lastLogin: 'Not Logged In' },
+        { name: 'Hybrid\'s & Atlas Lite', link: 'https://app.buildonhybrid.com', status: 'Pending', lastLogin: 'Not Logged In' },
+        { name: 'Bera Chain Testnet', link: 'https://www.berachain.com', status: 'Pending', lastLogin: 'Not Logged In' },
     ];
 
-    airdropData.forEach((airdrop, index) => {
-        const row = document.createElement('tr');
-        row.dataset.index = index; // Store the index for easy access
-        row.innerHTML = `
-            <td>${airdrop.name}</td>
-            <td><a href="${airdrop.link}" target="_blank">${airdrop.link}</a></td>
-            <td id="status-${index}">${airdrop.status}</td>
-            <td id="last-login-${index}">${airdrop.lastLogin || 'Not Logged In'}</td>
-            <td><button class="update-status-button" data-index="${index}">Update Status</button></td>
-        `;
-        airdropsTableBody.appendChild(row);
-    });
+    function populateAirdropsTable() {
+        airdropsTableBody.innerHTML = '';
+
+        airdropData.forEach((airdrop, index) => {
+            const row = document.createElement('tr');
+            row.dataset.index = index; // Store the index for easy access
+            row.innerHTML = `
+                <td>${airdrop.name}</td>
+                <td><a href="${airdrop.link}" target="_blank">${airdrop.link}</a></td>
+                <td id="status-${index}">${airdrop.status}</td>
+                <td id="last-login-${index}">${airdrop.lastLogin}</td>
+                <td><button class="update-status-button" data-index="${index}">Update Status</button></td>
+            `;
+            airdropsTableBody.appendChild(row);
+        });
+
+        updateDashboard();
+    }
+
+    function updateDashboard() {
+        const totalAirdrops = airdropData.length;
+        const pendingAirdrops = airdropData.filter(airdrop => airdrop.status === 'Pending').length;
+        const loggedInToday = airdropData.filter(airdrop => airdrop.lastLogin === new Date().toISOString().split('T')[0]).length;
+
+        dashboardTotalAirdrops.textContent = totalAirdrops;
+        dashboardPendingAirdrops.textContent = pendingAirdrops;
+        dashboardLoggedInToday.textContent = loggedInToday;
+    }
 
     airdropsTableBody.addEventListener('click', (event) => {
         if (event.target.classList.contains('update-status-button')) {
@@ -43,9 +67,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentDate = new Date().toISOString().split('T')[0];
             lastLoginCell.textContent = newStatus === 'Completed' ? currentDate : 'Not Logged In';
 
-            // Optionally, you could update the airdropData array as well
+            // Update the airdropData array
             airdropData[index].status = newStatus;
-            airdropData[index].lastLogin = newStatus === 'Completed' ? currentDate : '';
+            airdropData[index].lastLogin = newStatus === 'Completed' ? currentDate : 'Not Logged In';
+
+            // Update the dashboard
+            updateDashboard();
         }
     });
+
+    // Initial population of the table
+    populateAirdropsTable();
 });
