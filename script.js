@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dashboardPendingAirdrops = document.getElementById('pending-airdrops');
     const dashboardLoggedInToday = document.getElementById('logged-in-today');
 
- const airdropData = [
+const airdropData = [
     { name: 'Community Gaming', link: 'https://www.communitygaming.io/quests', status: 'Pending', lastLogin: 'Not Logged In' },
     { name: 'Maple Story', link: 'https://msu.io/quest/list', status: 'Pending', lastLogin: 'Not Logged In' },
     { name: 'Avalon', link: 'https://avalon.online/quests', status: 'Pending', lastLogin: 'Not Logged In' },
@@ -24,7 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: 'Plume Testnet', link: 'https://miles.plumenetwork.xyz/earn-miles', status: 'Pending', lastLogin: 'Not Logged In' },
     { name: 'Morph', link: 'https://www.morphl2.io/points/genesis_jungle/', status: 'Pending', lastLogin: 'Not Logged In' },
     { name: 'Swan chain', link: 'https://mission.swanchain.io/?invite=iFb6gNc9kHdA', status: 'Pending', lastLogin: 'Not Logged In' },
+    { name: 'Tabizoo', link: 'https://carnival.tabichain.com/', status: 'Pending', lastLogin: 'Not Logged In' } // Added Tabizoo
 ];
+
 
 
 
